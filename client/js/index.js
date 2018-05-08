@@ -25,7 +25,7 @@ class Login {
       cache: false,
       processData: false,
       contentType: false,
-      data: form_data,   /*{username: $('#user').val(), password: $('#password').val()},*/
+      data: form_data,   
       type: 'POST',
       success: function(php_response){
         if (php_response.msg == "OK") {

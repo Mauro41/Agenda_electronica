@@ -109,10 +109,8 @@ class EventsManager {
                 end: $('#end_date').val()+" "+$('#end_hour').val()
               })
             }
-
-
-
-
+            document.getElementsByTagName("form").reset()
+            
           }else {
             alert(data.msg)
           }
