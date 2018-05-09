@@ -65,7 +65,15 @@ class EventsManager {
                   this.eliminarEvento(event, jsEvent)
                   $('.calendario').fullCalendar('removeEvents', event.id);
             }
-
+          },
+          eventClick: (event,jsEvent) => {
+            var fecini = event.start;
+            $('#titulo').val(event.title);
+            $('#start_date').val(event.start.format('Y-MM-DD'));
+            $('#end_date').val(event.end.format('Y-MM-DD'));
+            $('#start_hour').val(event.start.format('H:mm'));
+            $('#end_hour').val(event.end.format('H:mm'));
+            $('#end_hour').prop('checked', event.allDay)
           }
         })
     }
@@ -109,7 +117,6 @@ class EventsManager {
                 end: $('#end_date').val()+" "+$('#end_hour').val()
               })
             }
-            document.getElementsByTagName("form").reset()
             
           }else {
             alert(data.msg)
@@ -141,8 +148,8 @@ class EventsManager {
             alert(data.msg)
           }
         },
-        error: function(){
-          alert("error en la comunicación con el servidor");
+        error: function(data, success, failure){
+          alert("error en la comunicación con el servidor "+failure);
         }
       })
       $('.delete-btn').find('img').attr('src', "img/trash.png");
@@ -170,7 +177,7 @@ class EventsManager {
         form_data.append('end_date', end_date)
         form_data.append('start_hour', start_hour)
         form_data.append('end_hour', end_hour)
-
+        alert(start_date)
         $.ajax({
           url: '../server/update_event.php',
           dataType: "json",
@@ -229,5 +236,4 @@ function initForm(){
       $('.timepicker, #end_date').removeAttr("disabled")
     }
   })
-
 }

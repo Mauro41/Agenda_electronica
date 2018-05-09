@@ -5,7 +5,7 @@
   $con = new conectaDB('localhost','usuariodb','agenda01');
 
   if ($con->conectar('agenda')=='OK') {
-    $datos_Agenda = $con->ejecutarQuery("SELECT titulo, fecini, COALESCE(fecfin, fecini) AS fecfin, COALESCE(horaini,'00:00') AS horaini, COALESCE(horafin,'23:59') AS horafin, todoeldia FROM evento WHERE idusuario='".$_COOKIE['id_agenda']."'");
+    $datos_Agenda = $con->ejecutarQuery("SELECT id, titulo, fecini, COALESCE(fecfin, fecini) AS fecfin, COALESCE(horaini,'00:00') AS horaini, COALESCE(horafin,'23:59') AS horafin, todoeldia FROM evento WHERE idusuario='".$_COOKIE['id_agenda']."'");
 
     $events = array();
     if ($datos_Agenda) {        
@@ -15,10 +15,10 @@
                 $todoElDia = 'true';
             };
             if ($todoElDia == 'true') {
-                $evento = array('title'=>$evento_read['titulo'], 'start'=>$evento_read['fecini'], 'allDay'=> $todoElDia);
+                $evento = array('id'=>$evento_read['id'], 'title'=>$evento_read['titulo'], 'start'=>$evento_read['fecini'], 'allDay'=> $todoElDia);
                 array_push($events, $evento);
             } else {
-                $evento = array('title'=>$evento_read['titulo'], 'start'=>$evento_read['fecini'].'T'.$evento_read['horaini'], 'end'=>$evento_read['fecfin'].'T'.$evento_read['horafin'], 'allDay'=> $todoElDia);
+                $evento = array('id'=>$evento_read['id'], 'title'=>$evento_read['titulo'], 'start'=>$evento_read['fecini'].'T'.$evento_read['horaini'], 'end'=>$evento_read['fecfin'].'T'.$evento_read['horafin'], 'allDay'=> $todoElDia);
                 array_push($events, $evento);
             }
         };
